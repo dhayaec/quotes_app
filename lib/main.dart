@@ -23,9 +23,9 @@ class Page extends StatelessWidget {
   Page(this.color, this.pageName);
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return Container(
       color: color,
-      child: new Center(child: new Text(pageName)),
+      child: Center(child: Text(pageName)),
     );
   }
 }
@@ -68,22 +68,27 @@ class PageViewExample extends StatelessWidget {
                 Builder(
                   builder: (BuildContext context) {
                     return IconButton(
-                        icon: Icon(Icons.settings),
+                        color: Colors.white,
+                        icon: Icon(Icons.menu),
                         onPressed: () => Scaffold.of(context).openDrawer());
                   },
                 ),
                 Row(
                   children: <Widget>[
                     IconButton(
-                      color: Colors.pink,
-                      icon: Icon(Icons.favorite),
-                      onPressed: () {},
-                    ),
-                    IconButton(
                       color: Colors.white,
-                      icon: Icon(Icons.share),
+                      icon: Icon(Icons.info),
                       onPressed: () {},
                     ),
+                    Builder(builder: (BuildContext context) {
+                      return IconButton(
+                        color: Colors.white,
+                        icon: Icon(Icons.format_list_bulleted),
+                        onPressed: () {
+                          Scaffold.of(context).openEndDrawer();
+                        },
+                      );
+                    })
                   ],
                 )
               ],
@@ -91,29 +96,41 @@ class PageViewExample extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.bottomCenter,
-            margin: EdgeInsets.only(bottom: 20.0),
+            margin: EdgeInsets.only(bottom: 40.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                RaisedButton(
-                  child: Text('one'),
+                IconButton(
+                  color: Colors.white,
+                  icon: Icon(
+                    Icons.favorite,
+                    size: 40.0,
+                  ),
                   onPressed: () {},
                 ),
-                RaisedButton(
-                  child: Text('one'),
-                  onPressed: () {},
-                ),
-                RaisedButton(
-                  child: Text('Top'),
+                IconButton(
+                  color: Colors.white,
+                  icon: Icon(
+                    Icons.arrow_upward,
+                    size: 40.0,
+                  ),
                   onPressed: () {
                     controllder.animateToPage(0,
                         duration: Duration(seconds: 1),
                         curve: ElasticInOutCurve());
                   },
                 ),
+                IconButton(
+                  color: Colors.white,
+                  icon: Icon(
+                    Icons.share,
+                    size: 40.0,
+                  ),
+                  onPressed: () {},
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -123,17 +140,30 @@ class PageViewExample extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          ListTile(
-            title: Text('Item 1'),
-            onTap: () {
-              Navigator.pop(context);
-            },
+          Container(
+            child: DrawerHeader(
+                child: CircleAvatar(
+              child: Icon(Icons.account_balance),
+            )),
+            color: Colors.tealAccent,
           ),
-          ListTile(
-            title: Text('Item 2'),
-            onTap: () {
-              Navigator.pop(context);
-            },
+          Container(
+            color: Colors.orange,
+            child: ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          Container(
+            color: Colors.orange,
+            child: ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
         ],
       ),
