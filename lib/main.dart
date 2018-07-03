@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 void main() => runApp(MyApp());
 
@@ -126,7 +127,9 @@ class PageViewExample extends StatelessWidget {
                     Icons.share,
                     size: 40.0,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Share.share('check out my app QuotesApp');
+                  },
                 ),
               ],
             ),
