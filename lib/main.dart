@@ -54,7 +54,7 @@ class PageViewExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: _buildDrawer(context),
+      drawer: _buildDrawer(context, count: 100),
       endDrawer: _buildDrawer(context),
       body: Stack(
         fit: StackFit.expand,
@@ -147,70 +147,28 @@ class PageViewExample extends StatelessWidget {
     );
   }
 
-  Widget _buildDrawer(BuildContext context) {
+  Widget _buildDrawer(BuildContext context, {int count = 20}) {
+    final items = List<String>.generate(count, (i) => "Item $i");
+
     return Drawer(
       elevation: 0.0,
       child: BackdropFilter(
         filter: new ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
         child: Container(
           decoration: new BoxDecoration(color: Colors.transparent),
-          child: ListView(
-            children: <Widget>[
-              ListTile(
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return ListTile(
                 title: Text(
-                  'Item 1',
+                  '${items[index]}',
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
                   Navigator.pop(context);
                 },
-              ),
-              ListTile(
-                title: Text(
-                  'Item 2',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Item 3',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Item 4',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Item 5',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Item 6',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+              );
+            },
           ),
         ),
       ),
