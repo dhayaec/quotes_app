@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
@@ -10,8 +12,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _appName,
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
+          primarySwatch: Colors.blueGrey,
+          canvasColor: Colors.white.withOpacity(0.1)),
       home: PageViewExample(),
     );
   }
@@ -25,8 +27,13 @@ class Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(10.0),
       color: color,
-      child: Center(child: Text(pageName)),
+      child: Center(
+          child: Text(
+        pageName,
+        style: TextStyle(fontSize: 30.0, color: Colors.white),
+      )),
     );
   }
 }
@@ -35,8 +42,8 @@ List<Color> colorList = [
   Colors.blue,
   Colors.lightGreen,
   Colors.orange,
+  Colors.indigo,
   Colors.deepPurple,
-  Colors.lime,
   Colors.red,
   Colors.pink
 ];
@@ -57,7 +64,8 @@ class PageViewExample extends StatelessWidget {
             scrollDirection: Axis.vertical,
             controller: controllder,
             itemBuilder: (context, index) {
-              return Page(colorList[index % colorList.length], 'Page $index');
+              return Page(colorList[index % colorList.length],
+                  'Welcome to my website this is an example $index');
             },
           ),
           Container(
@@ -141,34 +149,70 @@ class PageViewExample extends StatelessWidget {
 
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
-      child: ListView(
-        children: <Widget>[
-          Container(
-            child: DrawerHeader(
-                child: CircleAvatar(
-              child: Icon(Icons.account_balance),
-            )),
-            color: Colors.tealAccent,
+      elevation: 0.0,
+      child: BackdropFilter(
+        filter: new ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+        child: Container(
+          decoration: new BoxDecoration(color: Colors.transparent),
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Item 1',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Item 2',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Item 3',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Item 4',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Item 5',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Item 6',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
-          Container(
-            color: Colors.orange,
-            child: ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          Container(
-            color: Colors.orange,
-            child: ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
