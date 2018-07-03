@@ -129,14 +129,23 @@ class PageViewExample extends StatelessWidget {
                         curve: ElasticInOutCurve());
                   },
                 ),
-                IconButton(
-                  color: Colors.white,
-                  icon: Icon(
-                    Icons.share,
-                    size: 40.0,
-                  ),
-                  onPressed: () {
-                    Share.share('check out my app QuotesApp');
+                Builder(
+                  builder: (BuildContext context) {
+                    return IconButton(
+                      color: Colors.white,
+                      icon: Icon(
+                        Icons.share,
+                        size: 40.0,
+                      ),
+                      onPressed: () {
+                        final snackBar = SnackBar(
+                          content: Text('Loading available apps to share'),
+                          duration: Duration(seconds: 2),
+                        );
+                        Share.share('check out my app QuotesApp');
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      },
+                    );
                   },
                 ),
               ],
