@@ -155,6 +155,7 @@ class PageViewExample extends StatelessWidget {
       child: BackdropFilter(
         filter: new ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
         child: Container(
+          margin: EdgeInsets.only(top: 20.0),
           decoration: new BoxDecoration(color: Colors.transparent),
           child: ListView.builder(
             itemCount: items.length,
