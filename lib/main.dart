@@ -161,25 +161,22 @@ class PageViewExample extends StatelessWidget {
 
     return Drawer(
       elevation: 0.0,
-      child: BackdropFilter(
-        filter: new ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-        child: Container(
-          margin: EdgeInsets.only(top: 20.0),
-          decoration: new BoxDecoration(color: Colors.transparent),
-          child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  '${items[index]}',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              );
-            },
-          ),
+      child: Container(
+        margin: EdgeInsets.only(top: 20.0),
+        decoration: new BoxDecoration(color: Colors.transparent),
+        child: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(
+                '${items[index]}',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            );
+          },
         ),
       ),
     );
