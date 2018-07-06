@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
@@ -21,33 +20,41 @@ class MyApp extends StatelessWidget {
 
 class Page extends StatelessWidget {
   final color;
-  final pageName;
+  final quoteText;
   final fontFamily;
+  final authorName;
 
-  Page(this.color, this.fontFamily, this.pageName);
+  Page(this.color, this.fontFamily, this.quoteText, this.authorName);
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10.0),
       color: color,
       child: Center(
-          child: Text(
-        pageName,
-        style: TextStyle(
-            fontSize: 30.0, color: Colors.white, fontFamily: fontFamily),
+          child: Container(
+        child: Column(
+          children: <Widget>[
+            Text(
+              quoteText,
+              style: TextStyle(
+                  fontSize: 30.0, color: Colors.white, fontFamily: fontFamily),
+            ),
+            Text(authorName)
+          ],
+        ),
       )),
     );
   }
 }
 
 List<Color> colorList = [
-  Colors.blue,
+  Colors.lightBlue,
   Colors.lightGreen,
   Colors.orange,
   Colors.indigo,
   Colors.deepPurple,
-  Colors.red,
-  Colors.pink
+  Colors.lightBlueAccent,
+  Colors.pinkAccent
 ];
 
 List<String> fontFamily = [
@@ -77,15 +84,48 @@ class PageViewExample extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          PageView.builder(
-            itemCount: 999,
-            scrollDirection: Axis.vertical,
-            controller: controllder,
-            itemBuilder: (context, index) {
-              return Page(
-                  colorList[index % colorList.length],
-                  fontFamily[index % fontFamily.length],
-                  'Welcome to my website this is an example $index');
+          FutureBuilder(
+            future: DefaultAssetBundle
+                .of(context)
+                .loadString('assets/json/quotes.json'),
+            builder: (context, snapshot) {
+              var myData = json.decode(snapshot.data.toString());
+              return PageView.builder(
+                itemCount: myData.length,
+                scrollDirection: Axis.vertical,
+                controller: controllder,
+                itemBuilder: (context, index) {
+                  var quoteText = myData[index]['quoteText'];
+                  var quoteAuthor = myData[index]['quoteAuthor'];
+                  double height = MediaQuery.of(context).size.height;
+                  return Container(
+                    padding: EdgeInsets.only(
+                        top: height / 4, left: 20.0, right: 20.0),
+                    color: colorList[index % colorList.length],
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          quoteText,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: fontFamily[index % fontFamily.length],
+                              fontSize: 40.0),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Text(
+                            quoteAuthor,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
             },
           ),
           Container(
@@ -101,9 +141,8 @@ class PageViewExample extends StatelessWidget {
                         borderRadius: BorderRadius.circular(22.0),
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                            color: const Color(0x40000000),
-                            offset: Offset(0.0, 3.0),
-                            blurRadius: 20.0,
+                            color: const Color(0x30000000),
+                            blurRadius: 10.0,
                           ),
                         ],
                       ),
@@ -127,9 +166,8 @@ class PageViewExample extends StatelessWidget {
                           borderRadius: BorderRadius.circular(22.0),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                              color: const Color(0x40000000),
-                              offset: Offset(0.0, 3.0),
-                              blurRadius: 20.0,
+                              color: const Color(0x30000000),
+                              blurRadius: 10.0,
                             ),
                           ],
                         ),
