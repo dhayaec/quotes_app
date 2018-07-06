@@ -91,7 +91,7 @@ class PageViewExample extends StatelessWidget {
             builder: (context, snapshot) {
               var myData = json.decode(snapshot.data.toString());
               return PageView.builder(
-                itemCount: myData.length,
+                itemCount: myData == null ? 0 : myData.length,
                 scrollDirection: Axis.vertical,
                 controller: controllder,
                 itemBuilder: (context, index) {
@@ -100,7 +100,7 @@ class PageViewExample extends StatelessWidget {
                   double height = MediaQuery.of(context).size.height;
                   return Container(
                     padding: EdgeInsets.only(
-                        top: height / 4, left: 20.0, right: 20.0),
+                        top: height / 6, left: 20.0, right: 20.0),
                     color: colorList[index % colorList.length],
                     child: Column(
                       children: <Widget>[
@@ -109,7 +109,7 @@ class PageViewExample extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: fontFamily[index % fontFamily.length],
-                              fontSize: 40.0),
+                              fontSize: 50.0),
                         ),
                         Align(
                           alignment: Alignment.bottomRight,
