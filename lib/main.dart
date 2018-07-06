@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: _appName,
       theme: ThemeData(
           primarySwatch: Colors.blueGrey,
-          canvasColor: Colors.white.withOpacity(0.1)),
+          canvasColor: Colors.black.withOpacity(0.4)),
       home: PageViewExample(),
     );
   }
@@ -79,7 +79,7 @@ class PageViewExample extends StatelessWidget {
                     return IconButton(
                         color: Colors.white,
                         icon: Icon(Icons.menu),
-                        onPressed: () => Scaffold.of(context).openDrawer());
+                        onPressed: () => {});
                   },
                 ),
                 Row(
@@ -157,13 +157,12 @@ class PageViewExample extends StatelessWidget {
   }
 
   Widget _buildDrawer(BuildContext context, {int count = 20}) {
-    final items = List<String>.generate(count, (i) => "Item $i");
+    final items = List<String>.generate(count, (i) => "Menu Option ${i+1}");
 
     return Drawer(
       elevation: 0.0,
       child: Container(
-        margin: EdgeInsets.only(top: 20.0),
-        decoration: new BoxDecoration(color: Colors.transparent),
+        padding: EdgeInsets.only(top: 22.0),
         child: ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
