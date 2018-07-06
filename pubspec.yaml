@@ -69,7 +69,7 @@ flutter:
         - asset: assets/fonts/MarckScript-Regular.ttf
     - family: Markazi Text
       fonts:
-        - asset: assets/fonts/MarkaziText-Regular.ttf
+        - asset: assets/fonts/MarkaziText-Roman-VF.ttf
     - family: Norican
       fonts:
         - asset: assets/fonts/Norican-Regular.ttf
@@ -78,7 +78,7 @@ flutter:
         - asset: assets/fonts/Pacifico-Regular.ttf
     - family: Shadows Into Light
       fonts:
-        - asset: assets/fonts/ShadowsIntoLight-Regular.ttf
+        - asset: assets/fonts/ShadowsIntoLight.ttf
     - family: Shrikhand
       fonts:
         - asset: assets/fonts/Shrikhand-Regular.ttf

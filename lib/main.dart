@@ -22,8 +22,9 @@ class MyApp extends StatelessWidget {
 class Page extends StatelessWidget {
   final color;
   final pageName;
+  final fontFamily;
 
-  Page(this.color, this.pageName);
+  Page(this.color, this.fontFamily, this.pageName);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +33,8 @@ class Page extends StatelessWidget {
       child: Center(
           child: Text(
         pageName,
-        style: TextStyle(fontSize: 30.0, color: Colors.white),
+        style: TextStyle(
+            fontSize: 30.0, color: Colors.white, fontFamily: fontFamily),
       )),
     );
   }
@@ -46,6 +48,22 @@ List<Color> colorList = [
   Colors.deepPurple,
   Colors.red,
   Colors.pink
+];
+
+List<String> fontFamily = [
+  'Bad Script',
+  'Chela One',
+  'Dancing Script',
+  'Gabriela',
+  'Gaegu',
+  'Handlee',
+  'Knewave',
+  'Marck Script',
+  'Markazi Text',
+  'Norican',
+  'Pacifico',
+  'Shadows Into Light',
+  'Shrikhand',
 ];
 
 class PageViewExample extends StatelessWidget {
@@ -64,22 +82,36 @@ class PageViewExample extends StatelessWidget {
             scrollDirection: Axis.vertical,
             controller: controllder,
             itemBuilder: (context, index) {
-              return Page(colorList[index % colorList.length],
+              return Page(
+                  colorList[index % colorList.length],
+                  fontFamily[index % fontFamily.length],
                   'Welcome to my website this is an example $index');
             },
           ),
           Container(
             alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(top: 30.0),
+            margin: EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Builder(
                   builder: (BuildContext context) {
-                    return IconButton(
-                        color: Colors.white,
-                        icon: Icon(Icons.menu),
-                        onPressed: () => {});
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(22.0),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: const Color(0x40000000),
+                            offset: Offset(0.0, 3.0),
+                            blurRadius: 20.0,
+                          ),
+                        ],
+                      ),
+                      child: IconButton(
+                          color: Colors.white,
+                          icon: Icon(Icons.menu),
+                          onPressed: () => {}),
+                    );
                   },
                 ),
                 Row(
@@ -90,12 +122,24 @@ class PageViewExample extends StatelessWidget {
                       onPressed: () {},
                     ),
                     Builder(builder: (BuildContext context) {
-                      return IconButton(
-                        color: Colors.white,
-                        icon: Icon(Icons.format_list_bulleted),
-                        onPressed: () {
-                          Scaffold.of(context).openEndDrawer();
-                        },
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(22.0),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: const Color(0x40000000),
+                              offset: Offset(0.0, 3.0),
+                              blurRadius: 20.0,
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          color: Colors.white,
+                          icon: Icon(Icons.format_list_bulleted),
+                          onPressed: () {
+                            Scaffold.of(context).openEndDrawer();
+                          },
+                        ),
                       );
                     })
                   ],
