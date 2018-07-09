@@ -49,13 +49,22 @@ class Page extends StatelessWidget {
 }
 
 List<Color> colorList = [
-  Colors.lightBlue,
-  Colors.lightGreen,
-  Colors.orange,
-  Colors.indigo,
-  Colors.deepPurple,
-  Colors.lightBlueAccent,
-  Colors.pinkAccent
+  Colors.blue[900],
+  Colors.lightBlue[900],
+  Colors.cyan[900],
+  Colors.teal[900],
+  Colors.green[900],
+  Colors.lightGreen[900],
+  Colors.lime[900],
+  Colors.yellow[900],
+  Colors.amber[900],
+  Colors.orange[900],
+  Colors.deepOrange[900],
+  Colors.red[900],
+  Colors.pink[900],
+  Colors.purple[900],
+  Colors.deepPurple[900],
+  Colors.indigo[900],
 ];
 
 List<String> fontFamily = [
@@ -75,8 +84,9 @@ List<String> fontFamily = [
 ];
 
 class PageViewExample extends StatelessWidget {
-  final controllder = PageController(initialPage: 0);
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final PageController _controllder = PageController();
+  var quoteText;
+  var quoteAuthor;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,10 +104,10 @@ class PageViewExample extends StatelessWidget {
               return PageView.builder(
                 itemCount: myData == null ? 0 : myData.length,
                 scrollDirection: Axis.vertical,
-                controller: controllder,
+                controller: _controllder,
                 itemBuilder: (context, index) {
-                  var quoteText = myData[index]['quoteText'];
-                  var quoteAuthor = myData[index]['quoteAuthor'];
+                  quoteText = myData[index]['quoteText'];
+                  quoteAuthor = myData[index]['quoteAuthor'];
                   double height = MediaQuery.of(context).size.height;
                   return Container(
                     padding: EdgeInsets.only(
@@ -109,7 +119,7 @@ class PageViewExample extends StatelessWidget {
                           var fontSizeFactor = min(constraint.biggest.height,
                                       constraint.biggest.width) /
                                   quoteText.length +
-                              25;
+                              36;
                           return Text(
                             quoteText,
                             style: TextStyle(
@@ -138,28 +148,19 @@ class PageViewExample extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
+            margin: EdgeInsets.only(top: 30.0, right: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(22.0),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                            color: const Color(0x30000000),
-                            blurRadius: 10.0,
-                          ),
-                        ],
-                      ),
-                      child: IconButton(
-                          color: Colors.white,
-                          icon: Icon(Icons.menu),
-                          onPressed: () => {}),
-                    );
-                  },
+                FlatButton(
+                  child: Text(
+                    'Quotes App',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Chela One',
+                        fontSize: 30.0),
+                  ),
+                  onPressed: () {},
                 ),
                 Row(
                   children: <Widget>[
@@ -168,26 +169,17 @@ class PageViewExample extends StatelessWidget {
                       icon: Icon(Icons.info),
                       onPressed: () {},
                     ),
-                    Builder(builder: (BuildContext context) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(22.0),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: const Color(0x30000000),
-                              blurRadius: 10.0,
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
+                    Builder(
+                      builder: (BuildContext context) {
+                        return IconButton(
                           color: Colors.white,
                           icon: Icon(Icons.format_list_bulleted),
                           onPressed: () {
                             Scaffold.of(context).openEndDrawer();
                           },
-                        ),
-                      );
-                    })
+                        );
+                      },
+                    )
                   ],
                 )
               ],
@@ -214,9 +206,9 @@ class PageViewExample extends StatelessWidget {
                     size: 40.0,
                   ),
                   onPressed: () {
-                    controllder.animateToPage(0,
-                        duration: Duration(seconds: 1),
-                        curve: ElasticInOutCurve());
+                    _controllder.animateToPage(0,
+                        duration: Duration(milliseconds: 250),
+                        curve: SawTooth(3));
                   },
                 ),
                 Builder(
@@ -232,7 +224,7 @@ class PageViewExample extends StatelessWidget {
                           content: Text('Loading available apps to share'),
                           duration: Duration(seconds: 2),
                         );
-                        Share.share('check out my app QuotesApp');
+                        Share.share(quoteText + '  --  ' + quoteAuthor);
                         Scaffold.of(context).showSnackBar(snackBar);
                       },
                     );
@@ -247,7 +239,7 @@ class PageViewExample extends StatelessWidget {
   }
 
   Widget _buildDrawer(BuildContext context, {int count = 82}) {
-    final items = List<String>.generate(count, (i) => "Page ${i+1}");
+    final items = List<String>.generate(count, (i) => "Chapter ${i+1}");
 
     return Drawer(
       elevation: 0.0,
@@ -261,11 +253,12 @@ class PageViewExample extends StatelessWidget {
                 '${items[index]}',
                 style: TextStyle(color: Colors.white),
               ),
-              onTap: () {
-                var page = index * 20;
-                controllder.animateToPage(page,
-                    duration: Duration(seconds: 1), curve: ElasticInOutCurve());
+              onTap: () async {
                 Navigator.pop(context);
+                var page = index * 20;
+                // _controllder.jumpToPage(page);
+                _controllder.animateToPage(page,
+                    duration: Duration(milliseconds: 250), curve: SawTooth(3));
               },
             );
           },
