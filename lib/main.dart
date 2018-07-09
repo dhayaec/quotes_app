@@ -145,7 +145,7 @@ class PageViewExample extends StatelessWidget {
                   ),
                   Container(
                     alignment: Alignment.topLeft,
-                    margin: EdgeInsets.only(top: 30.0, right: 10.0),
+                    margin: EdgeInsets.only(top: 30.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
