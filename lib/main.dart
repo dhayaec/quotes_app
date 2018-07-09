@@ -79,8 +79,7 @@ List<String> fontFamily = [
   'Markazi Text',
   'Norican',
   'Pacifico',
-  'Shadows Into Light',
-  'Shrikhand',
+  'Shadows Into Light'
 ];
 
 class PageViewExample extends StatelessWidget {

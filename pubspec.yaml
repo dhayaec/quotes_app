@@ -79,9 +79,6 @@ flutter:
     - family: Shadows Into Light
       fonts:
         - asset: assets/fonts/ShadowsIntoLight.ttf
-    - family: Shrikhand
-      fonts:
-        - asset: assets/fonts/Shrikhand-Regular.ttf
 
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
