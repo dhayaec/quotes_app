@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
@@ -104,13 +105,20 @@ class PageViewExample extends StatelessWidget {
                     color: colorList[index % colorList.length],
                     child: Column(
                       children: <Widget>[
-                        Text(
-                          quoteText,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: fontFamily[index % fontFamily.length],
-                              fontSize: 50.0),
-                        ),
+                        LayoutBuilder(builder: (context, constraint) {
+                          var fontSizeFactor = min(constraint.biggest.height,
+                                      constraint.biggest.width) /
+                                  quoteText.length +
+                              25;
+                          return Text(
+                            quoteText,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily:
+                                    fontFamily[index % fontFamily.length],
+                                fontSize: fontSizeFactor),
+                          );
+                        }),
                         Align(
                           alignment: Alignment.bottomRight,
                           child: Text(
@@ -238,8 +246,8 @@ class PageViewExample extends StatelessWidget {
     );
   }
 
-  Widget _buildDrawer(BuildContext context, {int count = 20}) {
-    final items = List<String>.generate(count, (i) => "Menu Option ${i+1}");
+  Widget _buildDrawer(BuildContext context, {int count = 82}) {
+    final items = List<String>.generate(count, (i) => "Page ${i+1}");
 
     return Drawer(
       elevation: 0.0,
@@ -254,6 +262,9 @@ class PageViewExample extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onTap: () {
+                var page = index * 20;
+                controllder.animateToPage(page,
+                    duration: Duration(seconds: 1), curve: ElasticInOutCurve());
                 Navigator.pop(context);
               },
             );
