@@ -1,7 +1,10 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:quotes_app/BottomMenu.dart';
+import 'package:quotes_app/Page.dart';
+import 'package:quotes_app/QuotesDrawer.dart';
+import 'package:quotes_app/constants.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,80 +22,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Page extends StatelessWidget {
-  final color;
-  final quoteText;
-  final fontFamily;
-  final authorName;
-
-  Page(this.color, this.fontFamily, this.quoteText, this.authorName);
+class PageViewExample extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      color: color,
-      child: Center(
-          child: Container(
-        child: Column(
-          children: <Widget>[
-            Text(
-              quoteText,
-              style: TextStyle(
-                  fontSize: 30.0, color: Colors.white, fontFamily: fontFamily),
-            ),
-            Text(authorName)
-          ],
-        ),
-      )),
-    );
+  PageViewExampleState createState() {
+    return new PageViewExampleState();
   }
 }
 
-List<Color> colorList = [
-  Colors.blue[900],
-  Colors.cyan[900],
-  Colors.lightBlue[900],
-  Colors.green[900],
-  Colors.teal[900],
-  Colors.yellow[900],
-  Colors.lightGreen[900],
-  Colors.lime[900],
-  Colors.orange[900],
-  Colors.amber[900],
-  Colors.pink[900],
-  Colors.deepOrange[900],
-  Colors.deepPurple[900],
-  Colors.red[900],
-  Colors.indigo[900],
-  Colors.purple[900],
-];
-
-List<String> fontFamily = [
-  'Bad Script',
-  'Chela One',
-  'Dancing Script',
-  'Gabriela',
-  'Gaegu',
-  'Handlee',
-  'Knewave',
-  'Marck Script',
-  'Markazi Text',
-  'Norican',
-  'Pacifico',
-  'Shadows Into Light'
-];
-
-class PageViewExample extends StatelessWidget {
+class PageViewExampleState extends State<PageViewExample> {
   final PageController _pageController = PageController();
-
+  int _itemNumber = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: _buildDrawer(context, count: 100),
-        endDrawer: _buildDrawer(context),
+        endDrawer: QuotesDrawer(
+          pageController: _pageController,
+        ),
         body: FutureBuilder(
-            future: DefaultAssetBundle
-                .of(context)
+            future: DefaultAssetBundle.of(context)
                 .loadString('assets/json/quotes.json'),
             builder: (context, snapshot) {
               var myData = json.decode(snapshot.data.toString());
@@ -100,47 +47,31 @@ class PageViewExample extends StatelessWidget {
                 fit: StackFit.expand,
                 children: <Widget>[
                   PageView.builder(
+                    onPageChanged: (index) {
+                      setState(() async {
+                        _itemNumber = index + 1;
+                        var bgColor = colorList[index % colorList.length];
+                        await FlutterStatusbarcolor.setNavigationBarColor(
+                            bgColor);
+                      });
+                    },
                     itemCount: myData == null ? 0 : myData.length,
                     scrollDirection: Axis.vertical,
                     controller: _pageController,
                     itemBuilder: (context, index) {
                       var quoteText = myData[index]['quoteText'];
                       var quoteAuthor = myData[index]['quoteAuthor'];
-                      double height = MediaQuery.of(context).size.height;
-                      return Container(
-                        padding: EdgeInsets.only(
-                            top: height / 6, left: 20.0, right: 20.0),
-                        color: colorList[index % colorList.length],
-                        child: Column(
-                          children: <Widget>[
-                            LayoutBuilder(builder: (context, constraint) {
-                              var fontSizeFactor = min(
-                                          constraint.biggest.height,
-                                          constraint.biggest.width) /
-                                      quoteText.length +
-                                  36;
-                              return Text(
-                                quoteText,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily:
-                                        fontFamily[index % fontFamily.length],
-                                    fontSize: fontSizeFactor),
-                              );
-                            }),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Text(
-                                quoteAuthor,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
+                      double width = MediaQuery.of(context).size.width - 30.0;
+                      double height = MediaQuery.of(context).size.height / 1.5;
+                      Color bgColor = colorList[index % colorList.length];
+
+                      return new Page(
+                          index: index,
+                          bgColor: bgColor,
+                          width: width,
+                          height: height,
+                          quoteText: quoteText,
+                          quoteAuthor: quoteAuthor);
                     },
                   ),
                   Container(
@@ -161,10 +92,9 @@ class PageViewExample extends StatelessWidget {
                         ),
                         Row(
                           children: <Widget>[
-                            IconButton(
-                              color: Colors.white,
-                              icon: Icon(Icons.info),
-                              onPressed: () {},
+                            Text(
+                              "$_itemNumber / ${myData.length}",
+                              style: TextStyle(color: Colors.white),
                             ),
                             Builder(
                               builder: (BuildContext context) {
@@ -182,89 +112,10 @@ class PageViewExample extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                    margin: EdgeInsets.only(bottom: 40.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        IconButton(
-                          color: Colors.white,
-                          icon: Icon(
-                            Icons.favorite,
-                            size: 40.0,
-                          ),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          color: Colors.white,
-                          icon: Icon(
-                            Icons.arrow_upward,
-                            size: 40.0,
-                          ),
-                          onPressed: () {
-                            _pageController.animateToPage(0,
-                                duration: Duration(milliseconds: 250),
-                                curve: SawTooth(3));
-                          },
-                        ),
-                        Builder(
-                          builder: (BuildContext context) {
-                            return IconButton(
-                              color: Colors.white,
-                              icon: Icon(
-                                Icons.share,
-                                size: 40.0,
-                              ),
-                              onPressed: () {
-                                final snackBar = SnackBar(
-                                  content:
-                                      Text('Loading available apps to share'),
-                                  duration: Duration(seconds: 2),
-                                );
-                                var page = _pageController.page.toInt();
-                                var quoteText = myData[page]['quoteText'];
-                                var quoteAuthor = myData[page]['quoteAuthor'];
-                                Share.share(quoteText + '  --  ' + quoteAuthor);
-                                Scaffold.of(context).showSnackBar(snackBar);
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                  new BottomMenu(
+                      pageController: _pageController, myData: myData),
                 ],
               );
             }));
-  }
-
-  Widget _buildDrawer(BuildContext context, {int count = 82}) {
-    final items = List<String>.generate(count, (i) => "Chapter ${i+1}");
-
-    return Drawer(
-      elevation: 0.0,
-      child: Container(
-        padding: EdgeInsets.only(top: 22.0),
-        child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                '${items[index]}',
-                style: TextStyle(color: Colors.white),
-              ),
-              onTap: () async {
-                Navigator.pop(context);
-                var page = index * 20;
-                // _pageController.jumpToPage(page);
-                _pageController.animateToPage(page,
-                    duration: Duration(milliseconds: 250), curve: SawTooth(3));
-              },
-            );
-          },
-        ),
-      ),
-    );
   }
 }
