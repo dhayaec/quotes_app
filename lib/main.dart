@@ -65,6 +65,10 @@ class PageViewExampleState extends State<PageViewExample> {
                       double height = MediaQuery.of(context).size.height / 1.5;
                       Color bgColor = colorList[index % colorList.length];
 
+                      if (index == 0) {
+                        FlutterStatusbarcolor.setNavigationBarColor(bgColor);
+                      }
+
                       return Page(
                           index: index,
                           bgColor: bgColor,
