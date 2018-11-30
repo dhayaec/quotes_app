@@ -32,6 +32,14 @@ class PageViewExample extends StatefulWidget {
 class PageViewExampleState extends State<PageViewExample> {
   final PageController _pageController = PageController();
   int _itemNumber = 1;
+  int _quotesCount = 0;
+  GlobalKey<State<StatefulWidget>> scr = new GlobalKey();
+  @override
+  initState() {
+    super.initState();
+    FlutterStatusbarcolor.setNavigationBarColor(colorList[0]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,33 +50,28 @@ class PageViewExampleState extends State<PageViewExample> {
             future: DefaultAssetBundle.of(context)
                 .loadString('assets/json/quotes.json'),
             builder: (context, snapshot) {
-              var myData = json.decode(snapshot.data.toString());
+              var quotesList = json.decode(snapshot.data.toString());
               return Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
                   PageView.builder(
                     onPageChanged: (index) {
-                      setState(() async {
+                      setState(() {
                         _itemNumber = index + 1;
+                        _quotesCount = quotesList.length;
                         var bgColor = colorList[index % colorList.length];
-                        await FlutterStatusbarcolor.setNavigationBarColor(
-                            bgColor);
+                        FlutterStatusbarcolor.setNavigationBarColor(bgColor);
                       });
                     },
-                    itemCount: myData == null ? 0 : myData.length,
+                    itemCount: quotesList == null ? 0 : quotesList.length,
                     scrollDirection: Axis.vertical,
                     controller: _pageController,
                     itemBuilder: (context, index) {
-                      var quoteText = myData[index]['quoteText'];
-                      var quoteAuthor = myData[index]['quoteAuthor'];
+                      var quoteText = quotesList[index]['quoteText'];
+                      var quoteAuthor = quotesList[index]['quoteAuthor'];
                       double width = MediaQuery.of(context).size.width - 30.0;
                       double height = MediaQuery.of(context).size.height / 1.5;
                       Color bgColor = colorList[index % colorList.length];
-
-                      if (index == 0) {
-                        FlutterStatusbarcolor.setNavigationBarColor(bgColor);
-                      }
-
                       return Page(
                           index: index,
                           bgColor: bgColor,
@@ -97,7 +100,7 @@ class PageViewExampleState extends State<PageViewExample> {
                         Row(
                           children: <Widget>[
                             Text(
-                              "$_itemNumber / ${myData.length}",
+                              "$_itemNumber / $_quotesCount",
                               style: TextStyle(color: Colors.white),
                             ),
                             Builder(
@@ -116,7 +119,10 @@ class PageViewExampleState extends State<PageViewExample> {
                       ],
                     ),
                   ),
-                  BottomMenu(pageController: _pageController, myData: myData),
+                  BottomMenu(
+                    pageController: _pageController,
+                    myData: quotesList,
+                  ),
                 ],
               );
             }));

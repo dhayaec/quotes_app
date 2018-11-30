@@ -1,12 +1,16 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:ui';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 
 class BottomMenu extends StatelessWidget {
-  const BottomMenu({
-    Key key,
-    @required PageController pageController,
-    @required this.myData,
-  })  : _pageController = pageController,
+  const BottomMenu(
+      {Key key, @required PageController pageController, @required this.myData})
+      : _pageController = pageController,
         super(key: key);
 
   final PageController _pageController;
@@ -57,6 +61,7 @@ class BottomMenu extends StatelessWidget {
                   var quoteAuthor = myData[page]['quoteAuthor'];
                   Share.share(quoteText + '  --  ' + quoteAuthor);
                   Scaffold.of(context).showSnackBar(snackBar);
+                  // this.takeScreenShot();
                 },
               );
             },
@@ -65,4 +70,19 @@ class BottomMenu extends StatelessWidget {
       ),
     );
   }
+
+  // takeScreenShot() async {
+  //   RenderRepaintBoundary boundary = scr.currentContext.findRenderObject();
+  //   var image = await boundary.toImage();
+  //   var byteData = await image.toByteData(format: ImageByteFormat.png);
+  //   var pngBytes = byteData.buffer.asUint8List();
+  //   var img = base64Encode(pngBytes);
+  //   // print(img);
+  //   print(pngBytes);
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   final path = directory.path;
+  //   File imgFile = new File('$path/screenshot.png');
+  //   var file = imgFile.writeAsBytes(pngBytes);
+  //   print(file.toString());
+  // }
 }

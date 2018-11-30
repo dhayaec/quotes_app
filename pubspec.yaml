@@ -11,6 +11,7 @@ dependencies:
   share:
   auto_size_text:
   flutter_statusbarcolor: any
+  path_provider:
 
 dev_dependencies:
   flutter_test:

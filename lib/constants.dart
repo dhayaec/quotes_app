@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 List<Color> colorList = [
@@ -6,6 +5,7 @@ List<Color> colorList = [
   Colors.cyan[900],
   Colors.lightBlue[900],
   Colors.green[900],
+  Colors.deepOrange[900],
   Colors.teal[900],
   Colors.yellow[900],
   Colors.lightGreen[900],
@@ -13,7 +13,6 @@ List<Color> colorList = [
   Colors.orange[900],
   Colors.amber[900],
   Colors.pink[900],
-  Colors.deepOrange[900],
   Colors.deepPurple[900],
   Colors.red[900],
   Colors.indigo[900],
