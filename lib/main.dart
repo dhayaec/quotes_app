@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 class PageViewExample extends StatefulWidget {
   @override
   PageViewExampleState createState() {
-    return new PageViewExampleState();
+    return PageViewExampleState();
   }
 }
 
@@ -65,7 +65,7 @@ class PageViewExampleState extends State<PageViewExample> {
                       double height = MediaQuery.of(context).size.height / 1.5;
                       Color bgColor = colorList[index % colorList.length];
 
-                      return new Page(
+                      return Page(
                           index: index,
                           bgColor: bgColor,
                           width: width,
@@ -112,8 +112,7 @@ class PageViewExampleState extends State<PageViewExample> {
                       ],
                     ),
                   ),
-                  new BottomMenu(
-                      pageController: _pageController, myData: myData),
+                  BottomMenu(pageController: _pageController, myData: myData),
                 ],
               );
             }));
