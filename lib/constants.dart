@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
 
+String appName = 'Quotes App';
+
+class AppName extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      appName,
+      style: TextStyle(
+          color: Colors.white, fontFamily: 'Chela One', fontSize: 30.0),
+    );
+  }
+}
+
 List<Color> colorList = [
   Colors.blue[900],
   Colors.cyan[900],

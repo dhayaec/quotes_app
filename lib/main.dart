@@ -38,6 +38,7 @@ class PageViewExampleState extends State<PageViewExample> {
   initState() {
     super.initState();
     FlutterStatusbarcolor.setNavigationBarColor(colorList[0]);
+    _quotesCount = 0;
   }
 
   @override
@@ -92,13 +93,7 @@ class PageViewExampleState extends State<PageViewExample> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         FlatButton(
-                          child: Text(
-                            'Quotes App',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Chela One',
-                                fontSize: 30.0),
-                          ),
+                          child: AppName(),
                           onPressed: () {},
                         ),
                         Row(

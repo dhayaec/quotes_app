@@ -51,6 +51,10 @@ class Page extends StatelessWidget {
               color: Colors.white,
               fontSize: 20.0,
             ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 30.0),
+            child: AppName(),
           )
         ],
       ),
