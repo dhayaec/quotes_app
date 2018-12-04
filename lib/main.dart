@@ -33,7 +33,7 @@ class PageViewExampleState extends State<PageViewExample> {
   final PageController _pageController = PageController();
   int _itemNumber = 1;
   int _quotesCount = 0;
-  GlobalKey<State<StatefulWidget>> scr = new GlobalKey();
+  GlobalKey<State<StatefulWidget>> globalKey = new GlobalKey();
   @override
   initState() {
     super.initState();
@@ -54,32 +54,36 @@ class PageViewExampleState extends State<PageViewExample> {
               return Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  PageView.builder(
-                    onPageChanged: (index) {
-                      setState(() {
-                        _itemNumber = index + 1;
-                        _quotesCount = quotesList.length;
-                        var bgColor = colorList[index % colorList.length];
-                        FlutterStatusbarcolor.setNavigationBarColor(bgColor);
-                      });
-                    },
-                    itemCount: quotesList == null ? 0 : quotesList.length,
-                    scrollDirection: Axis.vertical,
-                    controller: _pageController,
-                    itemBuilder: (context, index) {
-                      var quoteText = quotesList[index]['quoteText'];
-                      var quoteAuthor = quotesList[index]['quoteAuthor'];
-                      double width = MediaQuery.of(context).size.width - 30.0;
-                      double height = MediaQuery.of(context).size.height / 1.5;
-                      Color bgColor = colorList[index % colorList.length];
-                      return Page(
-                          index: index,
-                          bgColor: bgColor,
-                          width: width,
-                          height: height,
-                          quoteText: quoteText,
-                          quoteAuthor: quoteAuthor);
-                    },
+                  RepaintBoundary(
+                    key: globalKey,
+                    child: PageView.builder(
+                      onPageChanged: (index) {
+                        setState(() {
+                          _itemNumber = index + 1;
+                          _quotesCount = quotesList.length;
+                          var bgColor = colorList[index % colorList.length];
+                          FlutterStatusbarcolor.setNavigationBarColor(bgColor);
+                        });
+                      },
+                      itemCount: quotesList == null ? 0 : quotesList.length,
+                      scrollDirection: Axis.vertical,
+                      controller: _pageController,
+                      itemBuilder: (context, index) {
+                        var quoteText = quotesList[index]['quoteText'];
+                        var quoteAuthor = quotesList[index]['quoteAuthor'];
+                        double width = MediaQuery.of(context).size.width - 30.0;
+                        double height =
+                            MediaQuery.of(context).size.height / 1.5;
+                        Color bgColor = colorList[index % colorList.length];
+                        return Page(
+                            index: index,
+                            bgColor: bgColor,
+                            width: width,
+                            height: height,
+                            quoteText: quoteText,
+                            quoteAuthor: quoteAuthor);
+                      },
+                    ),
                   ),
                   Container(
                     alignment: Alignment.topLeft,
@@ -120,9 +124,9 @@ class PageViewExampleState extends State<PageViewExample> {
                     ),
                   ),
                   BottomMenu(
-                    pageController: _pageController,
-                    myData: quotesList,
-                  ),
+                      pageController: _pageController,
+                      myData: quotesList,
+                      globalKey: globalKey),
                 ],
               );
             }));
