@@ -84,7 +84,7 @@ class BottomMenu extends StatelessWidget {
       print('${tempDir.path}/image.png');
       await file.writeAsBytes(pngBytes);
 
-      final channel = const MethodChannel('channel:me.alfian.share/share');
+      final channel = const MethodChannel('channel:dev.dhaya.share/share');
       channel.invokeMethod('shareFile', 'image.png');
     } catch (e) {
       print(e.toString());

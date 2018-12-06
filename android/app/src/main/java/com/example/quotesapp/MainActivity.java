@@ -2,6 +2,7 @@ package com.example.quotesapp;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import java.io.File;
@@ -13,12 +14,15 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
 
-  private static final String SHARE_CHANNEL = "channel:me.alfian.share/share";
+  private static final String SHARE_CHANNEL = "channel:dev.dhaya.share/share";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          getWindow().setStatusBarColor(0x00000000);
+    }
 
     new MethodChannel(this.getFlutterView(), SHARE_CHANNEL).setMethodCallHandler(new MethodChannel.MethodCallHandler() {
       public final void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
@@ -31,7 +35,7 @@ public class MainActivity extends FlutterActivity {
 
   private void shareFile(String path) {
     File imageFile = new File(this.getApplicationContext().getCacheDir(), path);
-    Uri contentUri = FileProvider.getUriForFile(this, "me.alfian.share", imageFile);
+    Uri contentUri = FileProvider.getUriForFile(this, "dev.dhaya.share", imageFile);
     Intent shareIntent = new Intent(Intent.ACTION_SEND);
     shareIntent.setType("image/png");
 
