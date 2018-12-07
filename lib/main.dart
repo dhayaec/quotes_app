@@ -82,7 +82,7 @@ class PageViewExampleState extends State<PageViewExample> {
                         onPageChanged: (index) {
                           setState(() {
                             _itemNumber = index + 1;
-                            var bgColor = colorList[index % colorList.length];
+                            var bgColor = _getColor(index);
                             FlutterStatusbarcolor.setNavigationBarColor(
                                 bgColor);
                           });
@@ -91,13 +91,15 @@ class PageViewExampleState extends State<PageViewExample> {
                         scrollDirection: Axis.vertical,
                         controller: _pageController,
                         itemBuilder: (context, index) {
+                          Color bgColor = _getColor(index);
+                          var size = MediaQuery.of(context).size;
+                          double width = size.width - 30.0;
+                          double radio = size.height / size.width;
+                          double height = radio < 1.7 ? width : size.width + 30;
+
                           var quoteText = quotesList[index]['quoteText'];
                           var quoteAuthor = quotesList[index]['quoteAuthor'];
-                          double width =
-                              MediaQuery.of(context).size.width - 30.0;
-                          double height =
-                              MediaQuery.of(context).size.height / 1.5;
-                          Color bgColor = colorList[index % colorList.length];
+
                           return Page(
                               index: index,
                               bgColor: bgColor,
@@ -121,4 +123,6 @@ class PageViewExampleState extends State<PageViewExample> {
               }
             }));
   }
+
+  Color _getColor(int index) => colorList[index % colorList.length];
 }

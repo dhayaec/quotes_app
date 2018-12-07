@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quotes_app/components/AppName.dart';
 
 class ToolButtons extends StatelessWidget {
   const ToolButtons({
@@ -21,9 +20,10 @@ class ToolButtons extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          FlatButton(
-            child: AppName(),
+          IconButton(
             onPressed: () {},
+            icon: Icon(Icons.menu),
+            color: Colors.white,
           ),
           Row(
             children: <Widget>[

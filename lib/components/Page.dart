@@ -40,7 +40,6 @@ class Page extends StatelessWidget {
                   ),
                   minFontSize: 10.0,
                   presetFontSizes: [
-                    80.0,
                     70.0,
                     60.0,
                     50.0,
@@ -57,7 +56,7 @@ class Page extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 30.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: AppName(),
           )
         ],
