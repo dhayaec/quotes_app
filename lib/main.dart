@@ -34,11 +34,18 @@ class PageViewExampleState extends State<PageViewExample> {
   final PageController _pageController = PageController();
   int _itemNumber = 1;
   int _quotesCount = 0;
+  bool shuffle = false;
   GlobalKey<State<StatefulWidget>> globalKey = GlobalKey();
   @override
   initState() {
     super.initState();
     FlutterStatusbarcolor.setNavigationBarColor(colorList[0]);
+  }
+
+  void _shuffleList() {
+    setState(() {
+      shuffle = !shuffle;
+    });
   }
 
   @override
@@ -58,7 +65,13 @@ class PageViewExampleState extends State<PageViewExample> {
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (snapshot.hasData) {
-                var quotesList = json.decode(snapshot.data.toString());
+                var quotesList;
+                List data = json.decode(snapshot.data.toString());
+                if (shuffle) {
+                  quotesList = shuffleList(data);
+                } else {
+                  quotesList = data;
+                }
                 _quotesCount = quotesList.length;
                 return Stack(
                   fit: StackFit.expand,
@@ -100,7 +113,9 @@ class PageViewExampleState extends State<PageViewExample> {
                     BottomMenu(
                         pageController: _pageController,
                         myData: quotesList,
-                        globalKey: globalKey),
+                        globalKey: globalKey,
+                        shuffleList: _shuffleList,
+                        shuffleState: shuffle),
                   ],
                 );
               }

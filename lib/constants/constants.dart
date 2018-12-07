@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 String appName = 'Quotes App';
@@ -34,3 +36,19 @@ List<String> fontFamily = [
   'Pacifico',
   'Shadows Into Light'
 ];
+
+List shuffleList(List items) {
+  var random = new Random();
+
+  // Go through all elements.
+  for (var i = items.length - 1; i > 0; i--) {
+    // Pick a pseudorandom number according to the list length
+    var n = random.nextInt(i + 1);
+
+    var temp = items[i];
+    items[i] = items[n];
+    items[n] = temp;
+  }
+
+  return items;
+}

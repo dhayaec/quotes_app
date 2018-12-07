@@ -40,9 +40,12 @@ class Page extends StatelessWidget {
                   ),
                   minFontSize: 10.0,
                   presetFontSizes: [
+                    80.0,
+                    70.0,
                     60.0,
+                    50.0,
                     40.0,
-                    20.0,
+                    30.0,
                   ]),
             ),
           ),

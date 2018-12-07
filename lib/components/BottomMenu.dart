@@ -11,12 +11,16 @@ class BottomMenu extends StatelessWidget {
       {Key key,
       @required PageController pageController,
       @required this.myData,
-      @required this.globalKey})
+      @required this.globalKey,
+      @required this.shuffleList,
+      @required this.shuffleState})
       : _pageController = pageController,
         super(key: key);
 
+  final Function shuffleList;
   final PageController _pageController;
   final dynamic myData;
+  final bool shuffleState;
   final GlobalKey<State<StatefulWidget>> globalKey;
 
   @override
@@ -30,10 +34,12 @@ class BottomMenu extends StatelessWidget {
           IconButton(
             color: Colors.white,
             icon: Icon(
-              Icons.favorite,
+              shuffleState ? Icons.restore : Icons.shuffle,
               size: 40.0,
             ),
-            onPressed: () {},
+            onPressed: () {
+              this.shuffleList();
+            },
           ),
           IconButton(
             color: Colors.white,
