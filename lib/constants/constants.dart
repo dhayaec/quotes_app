@@ -28,7 +28,6 @@ List<String> fontFamily = [
   'Gabriela',
   'Gaegu',
   'Handlee',
-  'Knewave',
   'Marck Script',
   'Markazi Text',
   'Norican',

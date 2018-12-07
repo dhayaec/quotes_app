@@ -61,9 +61,6 @@ flutter:
     - family: Handlee
       fonts:
         - asset: assets/fonts/Handlee-Regular.ttf
-    - family: Knewave
-      fonts:
-        - asset: assets/fonts/Knewave-Regular.ttf
     - family: Marck Script
       fonts:
         - asset: assets/fonts/MarckScript-Regular.ttf
