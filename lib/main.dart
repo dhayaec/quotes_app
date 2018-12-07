@@ -95,7 +95,9 @@ class PageViewExampleState extends State<PageViewExample> {
                           var size = MediaQuery.of(context).size;
                           double width = size.width - 30.0;
                           double radio = size.height / size.width;
-                          double height = radio < 1.7 ? width : size.width + 30;
+                          double customHeight =
+                              radio < 1.7 ? size.height - 30.0 : size.height;
+                          double height = customHeight / radio;
 
                           var quoteText = quotesList[index]['quoteText'];
                           var quoteAuthor = quotesList[index]['quoteAuthor'];
