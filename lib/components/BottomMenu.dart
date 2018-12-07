@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'package:flutter/services.dart' show ByteData, MethodChannel, rootBundle;
+import 'package:flutter/services.dart' show ByteData, MethodChannel;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:share/share.dart';
 
 class BottomMenu extends StatelessWidget {
   const BottomMenu(
@@ -44,7 +43,7 @@ class BottomMenu extends StatelessWidget {
             ),
             onPressed: () {
               _pageController.animateToPage(0,
-                  duration: Duration(milliseconds: 250), curve: SawTooth(3));
+                  duration: Duration(milliseconds: 450), curve: SawTooth(3));
             },
           ),
           Builder(
