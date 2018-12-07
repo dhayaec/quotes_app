@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:quotes_app/constants.dart';
+import 'package:quotes_app/components/AppName.dart';
+import 'package:quotes_app/constants/constants.dart';
 
 class Page extends StatelessWidget {
   const Page({
