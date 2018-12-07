@@ -93,11 +93,11 @@ class PageViewExampleState extends State<PageViewExample> {
                         itemBuilder: (context, index) {
                           Color bgColor = _getColor(index);
                           var size = MediaQuery.of(context).size;
-                          double width = size.width - 30.0;
+                          double width = size.width;
                           double radio = size.height / size.width;
-                          double customHeight =
-                              radio < 1.7 ? size.height - 30.0 : size.height;
-                          double height = customHeight / radio;
+                          double height = radio < 1.7
+                              ? size.height / 2
+                              : size.height / radio;
 
                           var quoteText = quotesList[index]['quoteText'];
                           var quoteAuthor = quotesList[index]['quoteAuthor'];
