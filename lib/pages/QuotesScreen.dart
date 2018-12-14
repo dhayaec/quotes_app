@@ -13,7 +13,7 @@ class QuotesScreen extends StatefulWidget {
 
   QuotesScreen({
     Key key,
-    this.initialPage = 1,
+    this.initialPage = 0,
   }) : super(key: key);
 
   @override
@@ -36,8 +36,12 @@ class QuotesScreenState extends State<QuotesScreen> {
   @override
   initState() {
     super.initState();
-    FlutterStatusbarcolor.setNavigationBarColor(colorList[0]);
     _pageCtrl = PageController(initialPage: this.widget.initialPage);
+    setState(() {
+      _isFav = true;
+      _bgColor = _getColor(this.widget.initialPage);
+    });
+    FlutterStatusbarcolor.setNavigationBarColor(_bgColor);
   }
 
   @override
@@ -49,6 +53,7 @@ class QuotesScreenState extends State<QuotesScreen> {
   void _addToFavorites(int index) async {
     var itemNumber = index.toString();
     var prefs = await sp;
+    // prefs.clear();
     var favs = prefs.getStringList(FAVORITES_LIST_KEY) ?? List<String>();
     if (!favs.contains(itemNumber)) {
       favs.add(itemNumber);
@@ -95,21 +100,20 @@ class QuotesScreenState extends State<QuotesScreen> {
                           var favList = prefs.getStringList(FAVORITES_LIST_KEY);
                           setState(() {
                             _itemNumber = index + 1;
-                            var bgColor = _getColor(index);
+                            _bgColor = _getColor(index);
                             if (favList.contains((index + 1).toString())) {
                               _isFav = true;
                             } else {
                               _isFav = false;
                             }
                             FlutterStatusbarcolor.setNavigationBarColor(
-                                bgColor);
+                                _bgColor);
                           });
                         },
                         itemCount: _quotesList == null ? 0 : _quotesList.length,
                         scrollDirection: Axis.vertical,
                         controller: _pageCtrl,
                         itemBuilder: (context, index) {
-                          _bgColor = _getColor(index);
                           var size = MediaQuery.of(context).size;
                           double width = size.width;
                           double radio = size.height / size.width;

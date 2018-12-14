@@ -31,6 +31,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
       _favQuotes = this
           .widget
           .favorites
+          .reversed
           .map((item) => this.widget.quotes[int.parse(item) - 1])
           .toList();
     });
@@ -61,7 +62,8 @@ class FavoritesScreenState extends State<FavoritesScreen> {
                         child: Text(" -- " + _favQuotes[index]['quoteAuthor']),
                       ),
                       onTap: () {
-                        var quoteId = int.parse(this.widget.favorites[index]);
+                        var favs = this.widget.favorites.reversed.toList();
+                        var quoteId = int.parse(favs[index]);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
