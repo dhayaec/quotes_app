@@ -52,3 +52,8 @@ List shuffleList(List items) {
 
   return items;
 }
+
+const FAVORITES_LIST_KEY = 'favorites';
+
+var appTheme = ThemeData(
+    primarySwatch: Colors.blueGrey, canvasColor: Colors.black.withOpacity(0.4));
